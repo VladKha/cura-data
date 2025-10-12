@@ -6,7 +6,7 @@ load_dotenv()
 from openai import OpenAI
 
 
-def find_wikipedia_errors(
+def find_data_errors(
     url: str,
     model: str = "gpt-5",
     reasoning_effort: str = "high",
@@ -17,7 +17,7 @@ def find_wikipedia_errors(
         reasoning={"effort": reasoning_effort},
         tools=[{"type": "web_search"}],
         input=f"""
-Find at least one error on this Wikipedia page:
+Find at least one error in this data:
 Wikipedia page: {url}
 """,
     )
@@ -26,7 +26,7 @@ Wikipedia page: {url}
 def main():
     url = "https://simple.wikipedia.org/wiki/Tartar_sauce"
     start = time.perf_counter()
-    output_text = find_wikipedia_errors(url)
+    output_text = find_data_errors(url)
     total_time = time.perf_counter() - start
     print(output_text)
     print(f"Request duration: {total_time:.2f} seconds")
