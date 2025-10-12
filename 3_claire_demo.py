@@ -271,3 +271,368 @@ if __name__ == "__main__":
     asyncio.run(main())
     elapsed = time.perf_counter() - start_time
     print(f"Request duration: {elapsed:.2f} seconds")
+# INFO     Extracted 6 claims from passage 'Tartar sauce (tartare in  agent.py:106
+#          the United Kingdom and Australia) is a mayonnaise-based'
+# INFO     Generated inconsistency reports for 6 claims               agent.py:117
+# ───────────────────────────── Inconsistency Report ─────────────────────────────
+# ╭─────────────────────────────────── Claim ────────────────────────────────────╮
+# │ The word 'Tartar' is a Turkic word.                                          │
+# ╰──────────────────────────────────────────────────────────────────────────────╯
+# ╭────────────────────────── Claim Was Extracted From ──────────────────────────╮
+# │                                                                              │
+# │ Tartar sauce (tartare in the United Kingdom and Australia) is a              │
+# │ mayonnaise-based sauce. It is often served as a condiment with seafood       │
+# │ dishes.[1] It is like mayonnaise, but with a few more ingredients such as    │
+# │ pickles, onions, capers, lemon juice and parsley.                            │
+# │                                                                              │
+# │ The word Tartar is a Turkic word. It is believed to be named after the Tatar │
+# │ people.                                                                      │
+# │                                                                              │
+# ╰──────────────────────────────────────────────────────────────────────────────╯
+#                                 ╭── Verdict ───╮
+#                                 │ INCONSISTENT │
+#                                 ╰──────────────╯
+# ╭──────────────────────────────────── Why? ────────────────────────────────────╮
+# │ Sources indicate that the Western form “Tartar” does not originate as a      │
+# │ Turkic word. The Oxford English Dictionary (via the Tatars etymology) notes  │
+# │ that the form “Tartar” has its origins in either Latin or French, entering   │
+# │ Western languages from Turkish and Persian forms of “tatar”; the extra ‘r’   │
+# │ in Western usage was likely added due to association with Tartarus [1].      │
+# │ Separately, “Tatars” are Turkic peoples, and “Tatar” is the ethnonym         │
+# │ connected to them [2].                                                       │
+# │                                                                              │
+# │ Thus, while the term ultimately refers to the Turkic Tatars, the specific    │
+# │ word “Tartar” is a Westernized form shaped by Latin/French and an            │
+# │ association with Greek “Tartarus,” not a Turkic word itself [1][14].         │
+# ╰──────────────────────────────────────────────────────────────────────────────╯
+# ╭──────────────── How the Claim Could Be Reworded for Clarity ─────────────────╮
+# │ Revise to distinguish between the ethnonym “Tatar” and the Western form      │
+# │ “Tartar.” For example: “The sauce’s name ultimately traces to the ethnonym   │
+# │ ‘Tatar’ (a Turkic people); the Western spelling ‘Tartar’ is a Latin/French   │
+# │ form, likely influenced by association with ‘Tartarus.’”                     │
+# ╰──────────────────────────────────────────────────────────────────────────────╯
+# ───────────────────────── Passages that Were Looked At ─────────────────────────
+# ┌─────────────────────────── [1] Tatars > Etymology ───────────────────────────┐
+# │ Further information: Tatarstan and Tartary Tatar became a name for           │
+# │ populations of the former Golden Horde in Europe, such as those of the       │
+# │ former Kazan, Crimean, Astrakhan, Qasim, and Siberian Khanates. The form     │
+# │ Tartar has its origins in either Latin or French, coming to Western European │
+# │ languages from Turkish and the Persian (tātār, "mounted messenger"). From    │
+# │ the beginning, the extra r was present in the Western forms and according to │
+# │ the Oxford English Dictionary this was most likely due to an association     │
+# │ with Tartarus. The Persian word is first recorded in the 13th century in     │
+# │ reference to the hordes of Genghis Khan and is of unknown origin; according  │
+# │ to the Oxford English Dictionary it is "said to be" ultimately from tata.    │
+# │ The Arabic word for Tatars is تتار. Tatars themselves wrote their name as    │
+# │ تاتار or طاطار. Ochir (2016) states that Siberian Tatars and the Tatars      │
+# │ living in the territories between Asia and Europe are of Turkic origin,      │
+# │ acquired the appellation Tatar later, and do not possess ancestral           │
+# │ connection to the Mongolic Nine Tatars, whose ethnogenesis involved Mongolic │
+# │ people as well as Mongolized Turks who had been ruling over them during the  │
+# │ 6–8th centuries. Pow (2019) proposes that Turkic-speaking peoples of         │
+# │ Cumania, as a sign of political allegiance, adopted the endonym Tatar of     │
+# │ their Mongol conquerors, before ultimately subsuming the latter culturally   │
+# │ and linguistically. Some Turkic peoples living within the Russian Empire     │
+# │ were named Tatar, although not all Turkic peoples of Russian Empire were     │
+# │ referred to as Tatars (for instance, this name was never used in relation to │
+# │ the Yakuts, Chuvashes, Sarts and some others). Some of these populations     │
+# │ used and keep using Tatar as a self-designation, others do not. Kipchak      │
+# │ groups Kipchak–Bulgar branch or "Tatar" in the narrow sense Volga Tatars     │
+# │ Astrakhan Tatars Lipka Tatars Kipchak–Cuman branch Crimean Tatars Karachays  │
+# │ and Balkars: Mountain Tatars Kumyks: Daghestan Tatars Kipchak–Nogai branch:  │
+# │ Dobrujan Tatars Nogais: Nogai Tatars Siberian Tatars Siberian branch:        │
+# │ Altaians: Altai Tatars, including the Tubalar or Chernevo Tatars Chulyms or  │
+# │ Chulym Tatars Khakas: Yenisei Tatars (also Abakan Tatars or Achin Tatars),   │
+# │ still use the Tatar designation Shors: Kuznetsk Tatars Oghuz branch          │
+# │ Azerbaijanis: Caucasus Tatars (also Transcaucasia Tatars or Azerbaijan       │
+# │ Tatars) The term is originally not just an exonym, since the Polovtsians of  │
+# │ Golden Horde called themselves Tatar. It is also an endonym to a number of   │
+# │ peoples of Siberia and Russian Far East, namely the Khakas people (тадар,    │
+# │ tadar).                                                                      │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌───────────────────────────────── [2] Tatars ─────────────────────────────────┐
+# │ Umbrella term for different Turkic ethnic groups in Asia and Europe Not to   │
+# │ be confused with Tartar. Ethnic group                                        │
+# │                                                                              │
+# │                                                                              │
+# │   татарлар tatarlar تاتارلار> Total population                               │
+# │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━      │
+# │   Volga Tatars                                                               │
+# │   Regions with significant populations                                       │
+# │   Russia                                                                     │
+# │   Ukraine (incl. population in Crimea and Crimean Tatars)                    │
+# │   Uzbekistan                                                                 │
+# │   Kazakhstan                                                                 │
+# │   Turkey                                                                     │
+# │   Afghanistan                                                                │
+# │   Turkmenistan                                                               │
+# │   Kyrgyzstan                                                                 │
+# │   Azerbaijan                                                                 │
+# │   Romania                                                                    │
+# │   United States                                                              │
+# │   Belarus                                                                    │
+# │   France                                                                     │
+# │   Switzerland                                                                │
+# │   China                                                                      │
+# │   Canada                                                                     │
+# │   Poland                                                                     │
+# │   Bulgaria                                                                   │
+# │   Finland                                                                    │
+# │   Japan                                                                      │
+# │   Australia                                                                  │
+# │   Czech Republic                                                             │
+# │   Estonia                                                                    │
+# │   Latvia                                                                     │
+# │   Lithuania                                                                  │
+# │   Iran                                                                       │
+# │   Languages                                                                  │
+# │   Kipchak languages                                                          │
+# │   Religion                                                                   │
+# │   Predominantly Sunni Islam with Eastern Orthodox minority                   │
+# │   Related ethnic groups                                                      │
+# │   Other Turkic peoples, especially other speakers of Kipchak languages       │
+# │                                                                              │
+# │                                                                              │
+# │ Share of Tatars in regions of Russia, 2010 census "Tatar" (/ˈtɑːtərz/        │
+# │ TAH-tərz) is an umbrella term for different Turkic ethnic groups bearing the │
+# │ name "Tatar" across Eastern Europe and Asia. Initially, the ethnonym Tatar   │
+# │ possibly referred to the Tatar confederation. That confederation was         │
+# │ eventually incorporated into the Mongol Empire when Genghis Khan unified the │
+# │ various steppe tribes. Historically, the term Tatars (or Tartars) was        │
+# │ applied to anyone originating from the vast Northern and Central Asian       │
+# │ landmass then known as Tartary, a term which was also conflated with the     │
+# │ Mongol Empire itself. More recently, however, the term has come to refer     │
+# │ more narrowly to related ethnic groups who refer to themselves as Tatars or  │
+# │ who speak languages that are commonly referred to as Tatar. The largest      │
+# │ group amongst the Tatars by far are the Volga Tatars, native to the          │
+# │ Volga-Ural region (Tatarstan and Bashkortostan) of European Russia, who for  │
+# │ this reason are often also known as "Tatars" in Russian. They compose 53% of │
+# │ the population in Tatarstan. Their language is known as the Tatar language.  │
+# │ As of 2010, there were an estimated 5.3 million ethnic Tatars in Russia.     │
+# │ While also speaking languages belonging to different Kipchak sub-groups,     │
+# │ genetic studies have shown that the three main groups of Tatars (Volga,      │
+# │ Crimean, Siberian) are apparently unrelated, and thus their formation        │
+# │ occurred independently of one another. However, it is possible that all      │
+# │ Tatar groups have at least partially the same origin, mainly from the times  │
+# │ of the Golden Horde. Many noble families in the Tsardom of Russia and        │
+# │ Russian Empire had Tatar origins.                                            │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌───────────────────── [3] Tartar > People and languages ──────────────────────┐
+# │ Tartar, someone from Tartary, the historical central Asian region populated  │
+# │ by Manchus, Mongols, Turks, and others Tatars, a Turkic ethnic group native  │
+# │ to present-day Russia and Ukraine Tatar language                             │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌───────────────────────── [4] Tartar sauce > History ─────────────────────────┐
+# │ Tartar sauce is named for steak tartare (and thus ultimately named for the   │
+# │ Tatars), with which it was commonly served in 19th century France. Recipes   │
+# │ for tartar sauce have been found in English-language cookbooks dating to the │
+# │ mid-19th century, including a recipe in Modern Cookery for Private Families  │
+# │ in 1860. It was also popular in Hungary in the late 19th century.            │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌───────────── [5] Steak tartare > History > Origins of the name ──────────────┐
+# │ Main article: Hamburg steak In the early 20th century, what is now generally │
+# │ known as "steak tartare" was called steak à l'Americaine in Europe. One      │
+# │ variation on that dish included serving it with tartar sauce; the 1922       │
+# │ edition of Escoffier's Le Guide Culinaire defines "Steak à la tartare" as    │
+# │ "steak à l'Americaine" made without egg yolk, served with tartar sauce on    │
+# │ the side. "Steak à la tartare" (literally meaning "served with tartar        │
+# │ sauce") was later shortened to "steak tartare" Over time, the distinction    │
+# │ between steak à l'Americaine and its tartar-sauce variant disappeared. The   │
+# │ 1938 edition of Larousse Gastronomique describes steak tartare as raw ground │
+# │ beef served with a raw egg yolk, without any mention of tartar sauce. "À la  │
+# │ tartare" or simply "tartare" can still mean "served with tartar sauce" for   │
+# │ some dishes, mostly fried fish. At the same time, the name "tartare" is also │
+# │ sometimes applied to other dishes of raw meats or fish, such as tuna         │
+# │ tartare, introduced in 1975 by the restaurant Le Duc in Paris.               │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌───────────────────────────── [6] Steak tartare ──────────────────────────────┐
+# │ Starter dish composed of finely chopped raw meat "Tartare" redirects here.   │
+# │ For the sauce, see Tartar sauce.                                             │
+# │                                                                              │
+# │                                                                              │
+# │   ---                ---                                                     │
+# │  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                   │
+# │   Course             Main course                                             │
+# │   Place of origin    France                                                  │
+# │   Main ingredients   Raw beef                                                │
+# │   Variations         Tartare aller-retour                                    │
+# │   Cookbook           Steak tartare   Media: Steak tartare                    │
+# │                                                                              │
+# │                                                                              │
+# │ Steak tartare in the French Quarter of San Francisco Steak tartare or tartar │
+# │ steak is a French dish of raw ground (minced) beef. It is usually served     │
+# │ with onions, capers, parsley or chive, salt, pepper, Worcestershire sauce,   │
+# │ and other seasonings, often presented separately, to be added to taste. It   │
+# │ is commonly served topped with a raw egg yolk. It is similar to the          │
+# │ Levantine kibbeh nayyeh, the Turkish çiğ köfte, the German Mett and the      │
+# │ Korean yukhoe. The name tartare is sometimes generalized to other raw meat   │
+# │ or fish dishes. In France, a less-common variant called tartare aller-retour │
+# │ is a mound of mostly raw ground meat lightly seared on both sides.           │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌─────────────────────── [7] Tartarus (disambiguation) ────────────────────────┐
+# │ Tartarus refers to a deity and place in Greek mythology. Tartarus may also   │
+# │ refer to: Tartarus, a Greek New Testament word used for Hell (in Christian   │
+# │ belief), derived from the pagan Greek use. Tartaros, a Norwegian black metal │
+# │ solo project by Charmand Grimloch aka Joachim Rygg. Tartarus (spider), a     │
+# │ genus of spiders in the family Stiphidiidae. Tartarus, the Latin name of the │
+# │ river Tartaro-Canalbianco in Italy. HMS Tartarus, the name of three ships of │
+# │ the Royal Navy and one planned one. Tartarus (DC Comics), a group of DC      │
+# │ comic book supervillains. Tartarus, a character in the Halo universe.        │
+# │ Tartarus Press, a limited edition publishing house. Tartaros, a dark guild   │
+# │ from the anime/manga Fairy Tail. Tartarus, a 2005 film by Dave Wascavage.    │
+# │ Tartarus/Tarterus, an evil Outer Plane in Dungeons & Dragons In other usage: │
+# │ A fictional "hottest point" of the sun in the novel Seven Ancient Wonders. A │
+# │ fictional planet in the computer game Warhammer 40,000: Dawn of War. A       │
+# │ fictional planet in the Stargate SG-1 universe. The artificial person        │
+# │ creation and maintenance arcology in Appleseed media. The name of the tower  │
+# │ which is one of the primary locations in the video game Persona 3. The name  │
+# │ of the landship piloted by Malkuthian colonel Jade Curtiss in the PS2 and    │
+# │ 3DS video game Tales of the Abyss. The location villains are sent to in the  │
+# │ cartoon series My Little Pony. The gate is guarded by Cerberus. A software   │
+# │ backup program, for use in Unix and Unix-like environments such as Linux and │
+# │ FreeBSD. The name of a special prison for villains in the anime/manga series │
+# │ My Hero Academia. Topics referred to by the same term                        │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌─────────────────────────────── [8] Tartarian ────────────────────────────────┐
+# │ Look up in Wiktionary, the free dictionary. Tartarian may be the adjective   │
+# │ form of: Tartarus, a place in the underworld of Greek mythology Tartary, a   │
+# │ historic name for much of Central and Northern Asia Tatars, several Turkic   │
+# │ groups Tatar languages, several Turkic languages with the name               │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌────────────────────────── [9] Tartar > Other uses ───────────────────────────┐
+# │ Tartar (horse), a racehorse Commander Tartar, the antagonist of the Splatoon │
+# │ 2 Octo Expansion Dental tartar or calculus, hardened dental plaque Tartar    │
+# │ Sauce, a swear word for SpongeBob SquarePants Wayne State Tartars, now       │
+# │ called the Warriors Tartarus, in Greek mythology, a place in the underworld  │
+# │ Tartarium, a middle age expensive fabric also known as Cloth of Tars         │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌───────────────────────────── [10] Tartar > Food ─────────────────────────────┐
+# │ Steak tartare, a meat dish made from raw ground (minced) beef or horsemeat   │
+# │ Tartar sauce, a condiment primarily composed of mayonnaise and finely        │
+# │ chopped capers Cream of Tartar, the culinary name for potassium bitartrate,  │
+# │ a dry, powdery, acidic byproduct of fermenting grapes into wine              │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌───────────────────── [11] Calculus (dental) > Etymology ─────────────────────┐
+# │ The word comes from Latin calculus 'small stone', from calx 'limestone,      │
+# │ lime', probably related to Greek χάλιξ chalix 'small stone, pebble, rubble', │
+# │ which many[who?] trace to a Proto-Indo-European root for 'split, break up'.  │
+# │ Calculus was a term used for various kinds of stones. This spun off many     │
+# │ modern words, including calculate ('use stones for mathematical purposes'),  │
+# │ and calculus, which came to be used, in the 18th century, for accidental or  │
+# │ incidental mineral buildups in human and animal bodies, like kidney stones   │
+# │ and minerals on teeth. Tartar, on the other hand, originates in Greek as     │
+# │ well (tartaron), but as the term for the white encrustation inside casks     │
+# │ (a.k.a. potassium bitartrate, commonly known as cream of tartar). This came  │
+# │ to be a term used for calcium phosphate on teeth in the early 19th century.  │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌──────────────────── [12] Calculus (medicine) > Etymology ────────────────────┐
+# │ The word comes from Latin calculus "small stone", from calx "limestone,      │
+# │ lime", probably related to Greek χάλιξ chalix "small stone, pebble, rubble", │
+# │ which many trace to a Proto-Indo-European language root for "split, break    │
+# │ up". Calculus was a term used for various kinds of stones. In the 18th       │
+# │ century it came to be used for accidental or incidental mineral buildups in  │
+# │ human and animal bodies, like kidney stones and minerals on teeth. Human     │
+# │ gallstones, all removed from one patient. Grid scale 1 mm. Calculus          │
+# │ developed from an arrowhead                                                  │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌────────────────────────── [13] Tartus > Etymology ───────────────────────────┐
+# │ The name derives from Ancient Greek: Αντιάραδος, romanized: Anti-Arados      │
+# │ (Antarados or Anti-Aradus, meaning "The town facing Aradus). In Latin, its   │
+# │ name became Tortosa. The original name survives in its Arabic form as Ṭarṭūs │
+# │ (Arabic: طَرْطُوس), from which the French Tartous and English Tartus derive.    │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌──────────────────── [14] Tartary > Geography and history ────────────────────┐
+# │ Knowledge of Manchuria, Siberia and Central Asia in Europe prior to the 18th │
+# │ century was limited. The entire area was known simply as "Tartary" and its   │
+# │ inhabitants "Tartars". In the early modern period, as understanding of the   │
+# │ geography increased, Europeans began to subdivide Tartary into sections with │
+# │ prefixes denoting the name of the ruling power or the geographical location. │
+# │ Thus, Siberia was Great Tartary or Russian Tartary, the Crimean Khanate was  │
+# │ Little Tartary, Manchuria was Chinese Tartary, and western Central Asia      │
+# │ (prior to becoming Russian Central Asia) was known as Independent Tartary.   │
+# │ By the seventeenth century, however, largely under the influence of Catholic │
+# │ missionary writings, the word "Tartar" came to refer to the Manchus and the  │
+# │ lands they ruled as "Tartary". European opinions of the area were often      │
+# │ negative, and reflected the legacy of the Mongol invasions that originated   │
+# │ from this region. The term originated in the wake of the widespread          │
+# │ devastation spread by the Mongol Empire. The adding of an extra "r" to       │
+# │ "Tatar" was suggestive of Tartarus, a Hell-like realm in Greek mythology. In │
+# │ the 18th century, conceptions of Siberia or Tartary and its inhabitants as   │
+# │ "barbarous" by Enlightenment-era writers tied into contemporary concepts of  │
+# │ civilization, savagery and racism. More positive opinions were also          │
+# │ expressed by Europeans. Some saw Tartary as a possible source of spiritual   │
+# │ knowledge lacking in contemporary European society. In Five Years of         │
+# │ Theosophy, edited by the Theosophist and scholar G.R.S. Mead, the polymath   │
+# │ and "seer" Emanuel Swedenborg is quoted as having advised, "Seek for the     │
+# │ Lost Word among the hierophants of Tartary, China, and Tibet."               │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌─────────────────────── [15] Tartarus (spider) > Names ───────────────────────┐
+# │ The genus name is derived from Tartarus, a place in the underworld of Greek  │
+# │ mythology, even lower than Hades. All four species take their common names,  │
+# │ and the specific epithet, from the caves in which they were first collected. │
+# │ Tartarus murdochensis and Tartarus thampannensis are both commonly called    │
+# │ Murdoch sink cave spider, Tartarus nurinensis is also known as the Nurina    │
+# │ cave spider.                                                                 │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌──────────────── [16] Greek underworld > Geography > Tartarus ────────────────┐
+# │ In some Greek sources Tartarus is another name for the underworld (serving   │
+# │ as a metonym for Hades), while in others it is a completely distinct realm   │
+# │ separate from the underworld. Hesiod most famously describes Tartarus as     │
+# │ being as far beneath the underworld as the earth is beneath the sky. Like    │
+# │ Hades, it too is so dark that the "night is poured around it in three rows   │
+# │ like a collar round the neck, while above it grows the roots of the earth    │
+# │ and of the unharvested sea." The most famous inhabitants of Tartarus are the │
+# │ Titans; Zeus cast the Titans along with his father Cronus into Tartarus      │
+# │ after defeating them. Homer wrote that Cronus then became the king of        │
+# │ Tartarus. According to Plato's Gorgias (c. 400 BC), souls are judged after   │
+# │ death and Tartarus is where the wicked received divine punishment. Tartarus  │
+# │ is also considered to be a primordial force or deity alongside entities such │
+# │ as the Earth, Night, and Time.                                               │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌────────────────────────── [17] Tzatziki > History ───────────────────────────┐
+# │ Tarator was the name of a dish made of ground walnuts and vinegar in the     │
+# │ Ottoman Empire. Dishes of various preparations in the region, including      │
+# │ dips, salads, and sauces, acquired the name. In the Levant, tarator is a     │
+# │ sauce based on tahini, while in Turkey and the Balkans it came to mean a     │
+# │ combination of yogurt and cucumbers, sometimes with walnuts. It has become a │
+# │ traditional part of meze.                                                    │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌───────────────────────────── [18] Ğ > Tatar use ─────────────────────────────┐
+# │ The Turkic Tatar language is written mostly in Cyrillic, but a Latin-based   │
+# │ alphabet is also in use. In the Latin alphabet, ğ represents /ʁ/, the voiced │
+# │ uvular fricative. In Cyrillic, Tatar uses г for both g and ğ without         │
+# │ distinction. Tatar ğ / г is the Arabic ghayn غ. In Arabic words and names    │
+# │ where there’s an ayin ع, Tatar adds the ghayn instead (عبد الله, ʻAbd Allāh, │
+# │ ’Abdullah; Tatar: Ğabdulla, Габдулла; Yaña imlâ: غابدوللا /ʁabdulla/). In    │
+# │ the Mishar Tatar Dialect, ğ is not pronounced, and thus, a word like şiğır   │
+# │ (شعر, шигыр, "poem") is şigır or şiyır for Mishars (who in Finland use the   │
+# │ Latin alphabet).                                                             │
+# └──────────────────────────────────────────────────────────────────────────────┘
+# ┌──────────────────────────────── [19] Tartary ────────────────────────────────┐
+# │ Historical term for northern and central Asia Not to be confused with        │
+# │ Tatarstan, Strait of Tartary, or Tărtăria. Map of independent Tartary (in    │
+# │ yellow) and Chinese Tartary (in violet), in 1806. Tartary (Latin: Tartaria;  │
+# │ French: Tartarie; German: Tartarei; Russian: Тартария, romanized: Tartariya) │
+# │ or Tatary (Russian: Татария, romanized: Tatariya) was a blanket term used in │
+# │ Western European literature and cartography for a vast part of Asia bounded  │
+# │ by the Caspian Sea, the Ural Mountains, the Pacific Ocean, and the northern  │
+# │ borders of China, India and Persia, at a time when this region was largely   │
+# │ unknown to European geographers. The active use of the toponym (place name)  │
+# │ can be traced from the 13th to the 19th centuries. In European sources,      │
+# │ Tartary became the most common name for Central Asia that had no connection  │
+# │ with the real polities or ethnic groups of the region; until the 19th        │
+# │ century, European knowledge of the area remained extremely scarce and        │
+# │ fragmentary. In modern English-speaking tradition, the region formerly known │
+# │ as Tartary is usually called Inner Asia or Central Eurasia. Much of this     │
+# │ area consists of arid plains, the main nomadic population of which in the    │
+# │ past was engaged in animal husbandry. Ignorance surrounding Tartary's use as │
+# │ a place name has spawned conspiracy theories including ideas of a "hidden    │
+# │ past" and "mud floods". Such theories assert that Tartary (or the "Tartarian │
+# │ Empire") was a lost civilization with advanced technology and culture. This  │
+# │ ignores the well-documented history of Asia, which Tartary refers to. In the │
+# │ present day, the Tartary region spans from central Afghanistan to northern   │
+# │ Kazakhstan, as well as areas in present Mongolia, China and the Russian Far  │
+# │ East in "Chinese Tartary".                                                   │
+# └──────────────────────────────────────────────────────────────────────────────┘
+#
+# Request duration: 487.93 seconds
