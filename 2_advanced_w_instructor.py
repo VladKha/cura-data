@@ -6,6 +6,7 @@ load_dotenv()
 import instructor
 from pydantic import BaseModel, Field
 
+
 class DataErrorAnalysis(BaseModel):
     class DataError(BaseModel):
         error_phrase: str = Field(description="exact sentence or phrase from the original text")
@@ -17,32 +18,65 @@ class DataErrorAnalysis(BaseModel):
         )
 
     errors: list[DataError]
-    
-analysis_prompt = """
+
+
+ANALYSIS_PROMPT = """
 You are an expert in detecting errors and inconsistencies in data.
 You will be provided with a Wikipedia URL.
 Your goal will be to find at least one error on the page and provide response with corresponding analysis.
 """
 
-url = "https://simple.wikipedia.org/wiki/Tartar_sauce"
-start_time = time.perf_counter()
-client = instructor.from_provider("openai/gpt-5", mode=instructor.Mode.RESPONSES_TOOLS_WITH_INBUILT_TOOLS)
-data_error_analysis = client.responses.create(
-    # model="gpt-5", # gpt-5 | gpt-5-nano
-    reasoning={"effort": "high"}, # high | low
-    tools=[{"type": "web_search"}],
-    input=[
-        {"role": "system", "content": analysis_prompt},
-        {"role": "user", "content": f"Wikipedia URL: {url}"},
-    ],
-    response_model=DataErrorAnalysis
-)
-elapsed = time.perf_counter() - start_time
-for data_error in data_error_analysis.errors:
-    print("error_phrase:", data_error.error_phrase)
-    print("error_short_summary:", data_error.error_short_summary)
-    print("why_wrong:", data_error.why_wrong)
-    print("suggested_fix:", data_error.suggested_fix)
-    print("references:", data_error.references)
-    print("-" * 80)
-print(f"Request duration: {elapsed:.2f} seconds")
+def find_wikipedia_errors_advanced_2(
+    url: str,
+    provider: str = "openai/gpt-5", # gpt-5 | gpt-5-nano
+    mode: instructor.Mode = instructor.Mode.RESPONSES_TOOLS_WITH_INBUILT_TOOLS,
+    reasoning_effort: str = "high",
+) -> DataErrorAnalysis:
+    client = instructor.from_provider(provider, mode=mode)
+    request_kwargs = dict(
+        reasoning={"effort": reasoning_effort},  # high | low
+        tools=[{"type": "web_search"}],
+        input=[
+            {"role": "system", "content": ANALYSIS_PROMPT},
+            {"role": "user", "content": f"Wikipedia URL: {url}"},
+        ],
+        response_model=DataErrorAnalysis,
+    )
+    analysis = client.responses.create(**request_kwargs)
+    return analysis
+
+
+def main() -> None:
+    url = "https://simple.wikipedia.org/wiki/Tartar_sauce"
+    start_time = time.perf_counter()
+    analysis = find_wikipedia_errors_advanced_2(url)
+    total_time = time.perf_counter() - start_time
+    for data_error in analysis.errors:
+        print("error_phrase:", data_error.error_phrase)
+        print("error_short_summary:", data_error.error_short_summary)
+        print("why_wrong:", data_error.why_wrong)
+        print("suggested_fix:", data_error.suggested_fix)
+        print("references:", data_error.references)
+        print("-" * 80)
+    print(f"Request duration: {total_time:.2f} seconds")
+
+
+if __name__ == "__main__":
+    main()
+# error_phrase: Tartar sauce (tartare in the United Kingdom and Australia)
+# error_short_summary: Wrong regional name (missing the word “sauce”)
+# why_wrong: - In UK/Australian usage, the condiment is called “tartare sauce,” not just “tartare.”
+# - Major dictionaries label the UK form as “tartare sauce.”
+# - UK/Australian retail packaging likewise uses “Tartare Sauce.”
+# suggested_fix: Change to: “Tartar sauce (called tartare sauce in the United Kingdom and Australia) …”
+# references: ['https://dictionary.cambridge.org/dictionary/english/tartar-sauce', 'https://www.britannica.com/dictionary/tartar-sauce', 'https://www.tesco.com/groceries/en-GB/products/264876866', 'https://www.woolworths.com.au/Shop/ProductDetails/32766/masterfoods-seafood-sauce-tartare']
+# --------------------------------------------------------------------------------
+# error_phrase: The word Tartar is a Turkic word. It is believed to be named after the Tatar people.
+# error_short_summary: Etymology misrepresented
+# why_wrong: - The sauce name comes from French “sauce tartare.”
+# - “Tartar” (as a people-name in Western languages) arrived via Medieval Latin and was influenced by Latin “Tartarus”; it is not itself a Turkic-language word. The Turkic ethnonym is “Tatar.”
+# - The condiment’s name ultimately references the Tatars (a Turkic people), but the wording should reflect the French culinary term and the Tatar ethnonym accurately.
+# suggested_fix: Replace with: “The name comes from the French sauce tartare and ultimately refers to the Tatars (a Turkic people). ‘Tartar’ is the Western form of ‘Tatar,’ influenced by Medieval Latin Tartarus.”
+# references: ['https://www.merriam-webster.com/dictionary/tartar%20sauce', 'https://www.etymonline.com/word/tartar', 'https://www.britannica.com/topic/Tatar']
+# --------------------------------------------------------------------------------
+# Request duration: 235.90 seconds
