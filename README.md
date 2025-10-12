@@ -7,6 +7,11 @@ or table data (csv) and get a list of potential errors with analysis
 ## YouTube Demo
 [![YouTube demo](https://img.youtube.com/vi/93nSd0prUUE/1.jpg)](https://www.youtube.com/watch?v=93nSd0prUUE)
 
+## Demos
+| ![](images/tartar_1.png)    | ![](images/bruce_lee_1.png) |
+|-----------------------------|-----------------------------|
+| ![](images/bruce_lee_2.png) | ![](images/bruce_lee_3.png) |
+
 ## Prerequisites
 1. OpenAI developer account
 2. Weaviate developer account
