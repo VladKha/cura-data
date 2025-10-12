@@ -5,7 +5,7 @@ Input web page with your information (e.g. Wikipedia page)
 or table data (csv) and get a list of potential errors with analysis
 
 ## YouTube Demo
-[![YouTube demo](https://img.youtube.com/vi/93nSd0prUUE/1.jpg)](https://www.youtube.com/watch?v=93nSd0prUUE)
+[![YouTube demo](https://img.youtube.com/vi/93nSd0prUUE/maxresdefault.jpg)](https://www.youtube.com/watch?v=93nSd0prUUE)
 
 ## Demos
 | ![](images/tartar_1.png)    | ![](images/bruce_lee_1.png) |
