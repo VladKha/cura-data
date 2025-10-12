@@ -1,6 +1,3 @@
-[submodule "inconsistency-detection"]
-	path = inconsistency-detection
-	url = https://github.com/VladKha/inconsistency-detection.git
 [submodule "inconsistency_detection"]
 	path = inconsistency_detection
 	url = https://github.com/VladKha/inconsistency_detection/
