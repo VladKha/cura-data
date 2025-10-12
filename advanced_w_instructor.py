@@ -1,5 +1,6 @@
 import time
 
+from charset_normalizer.md import lru_cache
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -30,7 +31,7 @@ def find_wikipedia_errors_advanced_2(
     url: str,
     provider: str = "openai/gpt-5", # gpt-5 | gpt-5-nano
     mode: instructor.Mode = instructor.Mode.RESPONSES_TOOLS_WITH_INBUILT_TOOLS,
-    reasoning_effort: str = "high",
+    reasoning_effort: str = "high", # high | low
 ) -> DataErrorAnalysis:
     client = instructor.from_provider(provider, mode=mode)
     request_kwargs = dict(
@@ -44,6 +45,35 @@ def find_wikipedia_errors_advanced_2(
     )
     analysis = client.responses.create(**request_kwargs)
     return analysis
+    # return {
+    #   "errors": [
+    #     {
+    #       "error_phrase": "Tartar sauce (tartare in the United Kingdom and Australia)",
+    #       "error_short_summary": "British/Australian name missing “sauce”",
+    #       "why_wrong": "- Standard British/Commonwealth usage is “tartare sauce,” not just “tartare.”\n- Major dictionaries list the British variant explicitly as “tartare sauce.”\n- En‑Wikipedia also notes the UK/Commonwealth spelling as “tartare sauce.”",
+    #       "suggested_fix": "Change to: “Tartar sauce (called ‘tartare sauce’ in the United Kingdom and Australia).”",
+    #       "references": [
+    #         "https://dictionary.cambridge.org/dictionary/english/tartar-sauce",
+    #         "https://www.merriam-webster.com/dictionary/tartar%20sauce",
+    #         "https://www.britannica.com/dictionary/tartar-sauce",
+    #         "https://en.wikipedia.org/wiki/Tartar_sauce"
+    #       ]
+    #     },
+    #     {
+    #       "error_phrase": "The word Tartar is a Turkic word. It is believed to be named after the Tatar people.",
+    #       "error_short_summary": "Etymology oversimplified/misleading",
+    #       "why_wrong": "- The sauce name comes from French “sauce tartare”; “Tartar sauce” is attested in English from 1855.\n- “Tartar” (for the people) is a Western exonym via Medieval Latin/French, influenced by Latin “Tartarus”; the native ethnonym is “Tatar” (a Turkic people). “Tartar” itself is not a Turkic word.\n- Some sources connect “tartare” to the Tatars indirectly, but reputable culinary histories note the link is uncertain/folkloric.",
+    #       "suggested_fix": "Replace with: “The name comes from French ‘sauce tartare’. The term ultimately relates to the Tatars (a Turkic people), but the English form ‘tartar’ is a Western exonym via Latin/French, not itself a Turkic word.”",
+    #       "references": [
+    #         "https://www.etymonline.com/word/tartar",
+    #         "https://www.etymonline.com/word/Tatar",
+    #         "https://en.wikipedia.org/wiki/Tatars#Etymology",
+    #         "https://en.wikipedia.org/wiki/Tartar_sauce",
+    #         "https://www.newyorker.com/culture/kitchen-notes/how-to-make-a-classic-bistro-style-steak-tartare-at-home"
+    #       ]
+    #     }
+    #   ]
+    # }
 
 
 def main() -> None:
