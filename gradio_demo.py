@@ -2,6 +2,9 @@
 import re
 import time
 import json
+import hashlib
+import pickle
+from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin, urlparse
 
@@ -9,7 +12,47 @@ import gradio as gr
 import requests
 from bs4 import BeautifulSoup, NavigableString
 
-from advanced_w_instructor import find_wikipedia_errors_advanced_2
+from advanced_w_instructor import find_data_errors_advanced_2
+from save_enrich_table import save_enrich_table
+
+# Cache directory setup
+CACHE_DIR = Path(".cache/analysis_results")
+CACHE_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def get_cache_key(url: str) -> str:
+    """Generate a cache key from URL."""
+    return hashlib.sha256(url.encode()).hexdigest()
+
+
+def get_cached_analysis(url: str) -> dict[str, Any] | None:
+    """Try to load cached analysis for a URL."""
+    cache_key = get_cache_key(url)
+    cache_file = CACHE_DIR / f"{cache_key}.pkl"
+
+    if cache_file.exists():
+        try:
+            with open(cache_file, 'rb') as f:
+                cached_data = pickle.load(f)
+            print(f"✓ Loaded cached analysis for {url}")
+            return cached_data
+        except Exception as e:
+            print(f"✗ Failed to load cache: {e}")
+            return None
+    return None
+
+
+def save_cached_analysis(url: str, analysis: dict[str, Any]) -> None:
+    """Save analysis results to cache."""
+    cache_key = get_cache_key(url)
+    cache_file = CACHE_DIR / f"{cache_key}.pkl"
+
+    try:
+        with open(cache_file, 'wb') as f:
+            pickle.dump(analysis, f)
+        print(f"✓ Cached analysis for {url}")
+    except Exception as e:
+        print(f"✗ Failed to save cache: {e}")
 
 
 def download_web_page(url):
@@ -537,23 +580,42 @@ def run_analysis(
     if error:
         return error, {}, "Failed to load page"
 
-    progress(0.15, desc="Running error detection (this may take a while)...")
-    start_time = time.perf_counter()
-    try:
-        analysis = find_wikipedia_errors_advanced_2(url)
-    except Exception as exc:
-        raise gr.Error(f"Analysis failed: {exc}") from exc
+    # Check cache first
+    cache_used = False
 
-    elapsed = time.perf_counter() - start_time
+    progress(0.1, desc="Checking cache...")
+    analysis_dict = get_cached_analysis(url)
+    if analysis_dict:
+        cache_used = True
+        progress(0.8, desc="Loaded from cache!")
+
+    # Run analysis if not cached
+    if not analysis_dict:
+        progress(0.15, desc="Running error detection (this may take a while)...")
+        start_time = time.perf_counter()
+        try:
+            analysis = find_data_errors_advanced_2(url)
+        except Exception as exc:
+            raise gr.Error(f"Analysis failed: {exc}") from exc
+
+        # if table data - save to weaviate the table + enrich it
+        if url.endswith('.csv'):
+            save_enrich_table(url)
+
+        elapsed = time.perf_counter() - start_time
+
+        # Handle both dict and object responses
+        if hasattr(analysis, 'model_dump'):
+            analysis_dict = analysis.model_dump(mode="json")
+        elif hasattr(analysis, 'dict'):
+            analysis_dict = analysis.dict()
+        else:
+            analysis_dict = analysis
+
+        # Save to cache
+        save_cached_analysis(url, analysis_dict)
+
     progress(0.9, desc="Highlighting errors in page...")
-
-    # Handle both dict and object responses
-    if hasattr(analysis, 'model_dump'):
-        analysis_dict = analysis.model_dump(mode="json")
-    elif hasattr(analysis, 'dict'):
-        analysis_dict = analysis.dict()
-    else:
-        analysis_dict = analysis
 
     errors = analysis_dict.get("errors", [])
     num_errors = len(errors)
@@ -566,18 +628,31 @@ def run_analysis(
 
     progress(1.0, desc="Complete!")
 
-    status = f"Found {num_errors} potential issue(s) in {elapsed:.1f}s."
-    if num_errors == 0:
-        status = f"No issues found in {elapsed:.1f}s."
+    if cache_used:
+        status = f"Found {num_errors} potential issue(s) (loaded from cache)."
+        if num_errors == 0:
+            status = f"No issues found (loaded from cache)."
+    else:
+        status = f"Found {num_errors} potential issue(s) in {elapsed:.1f}s."
+        if num_errors == 0:
+            status = f"No issues found in {elapsed:.1f}s."
 
     return highlighted_html, analysis_dict, status
 
 
 with gr.Blocks(title="CuraData", theme=gr.themes.Ocean()) as demo:
     gr.Markdown("""
-    <h1 style='text-align: center'>CuraData</h1>
+    <div style='text-align: center'>
+        <div style='display: inline-flex; align-items: center; gap: 12px;'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 7v14"></path>
+                <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path>
+            </svg>
+            <h1 style='margin: 0; color: #3b82f6; font-size: 48px; font-weight: 600;'>CuraData</h1>
+        </div>
+    </div>
     <p style='text-align: center; font-size: 16px; color: #666; margin: 20px 0;'>
-        Paste a URL and run the data error detector
+        Paste a URL and find potential errors in your data
     </p>
     """)
 
@@ -589,12 +664,15 @@ with gr.Blocks(title="CuraData", theme=gr.themes.Ocean()) as demo:
 
     gr.Markdown("### Examples:")
     gr.Markdown("""
-- (Simple) Wikipedia:
+- Simple Wikipedia:
     - `https://simple.wikipedia.org/wiki/Tartar_sauce`
-    - `https://simple.wikipedia.org/wiki/Non-steroidal_anti-inflammatory_drug`
     - `https://simple.wikipedia.org/wiki/Bruce_Lee`
-- Investopedia: `https://www.investopedia.com/terms/i/inflation.asp`
-- News sites, blogs, documentation sites, etc.
+    - `https://simple.wikipedia.org/wiki/Non-steroidal_anti-inflammatory_drug`
+- Investopedia:
+    - `https://www.investopedia.com/terms/i/inflation.asp`
+- Table data:
+    - `https://raw.githubusercontent.com/VladKha/cura-data/refs/heads/main/demo_data/tabular/toy_transactions.csv`
+    - `https://raw.githubusercontent.com/VladKha/cura-data/refs/heads/main/demo_data/tabular/toy_transactions_corrupted.csv`
 """)
 
     analyze_button = gr.Button("Find Errors", variant="primary")
