@@ -13,6 +13,7 @@ dependencies = [
     "loguru",
     "markdown",
     "markdownify",
+    "gradio",
     "openai",
     "python-dotenv",
     "rich",
