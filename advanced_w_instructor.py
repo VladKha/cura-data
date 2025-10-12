@@ -23,11 +23,11 @@ class DataErrorAnalysis(BaseModel):
 
 ANALYSIS_PROMPT = """
 You are an expert in detecting errors and inconsistencies in data.
-You will be provided with a Wikipedia URL.
+You will be provided with a URL with data (could be text, table, etc).
 Your goal will be to find at least one error on the page and provide response with corresponding analysis.
 """
 
-def find_wikipedia_errors_advanced_2(
+def find_data_errors_advanced_2(
     url: str,
     provider: str = "openai/gpt-5", # gpt-5 | gpt-5-nano
     mode: instructor.Mode = instructor.Mode.RESPONSES_TOOLS_WITH_INBUILT_TOOLS,
@@ -39,7 +39,7 @@ def find_wikipedia_errors_advanced_2(
         tools=[{"type": "web_search"}],
         input=[
             {"role": "system", "content": ANALYSIS_PROMPT},
-            {"role": "user", "content": f"Wikipedia URL: {url}"},
+            {"role": "user", "content": f"Data URL: {url}"},
         ],
         response_model=DataErrorAnalysis,
     )
@@ -79,7 +79,7 @@ def find_wikipedia_errors_advanced_2(
 def main() -> None:
     url = "https://simple.wikipedia.org/wiki/Tartar_sauce"
     start_time = time.perf_counter()
-    analysis = find_wikipedia_errors_advanced_2(url)
+    analysis = find_data_errors_advanced_2(url)
     total_time = time.perf_counter() - start_time
     for data_error in analysis.errors:
         print("error_phrase:", data_error.error_phrase)
