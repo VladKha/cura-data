@@ -13,7 +13,7 @@ import requests
 from bs4 import BeautifulSoup, NavigableString
 
 from advanced_w_instructor import find_data_errors_advanced_2
-from save_enrich_table import save_enrich_table
+
 
 # Cache directory setup
 CACHE_DIR = Path(".cache/analysis_results")
@@ -597,10 +597,6 @@ def run_analysis(
             analysis = find_data_errors_advanced_2(url)
         except Exception as exc:
             raise gr.Error(f"Analysis failed: {exc}") from exc
-
-        # if table data - save to weaviate the table + enrich it
-        if url.endswith('.csv'):
-            save_enrich_table(url)
 
         elapsed = time.perf_counter() - start_time
 

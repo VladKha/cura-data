@@ -36,15 +36,12 @@ or table data (csv) and get a list of potential errors with analysis
 Create a `.env` file in the root directory from `.env_example` file 
 and add all required environment variables:
 - `OPENAI_API_KEY` from your OpenAI developer account
-- `WEAVIATE_URL`, `WEAVIATE_API_KEY` from your [Weaviate sandbox cluster](https://docs.weaviate.io/cloud/manage-clusters/create#sandbox-clusters)
 
 ## How to Run
 Run the agent: `python gradio_demo.py`
 
 ## Technologies
 - OpenAI GPT-5: LLM for agent "brains"
-- Lovable: UI design, [mock](https://page-probe-project.lovable.app)
-- Weaviate: persistent storage of table datasets with [agentic enrichment](https://docs.weaviate.io/agents/transformation/tutorial-enrich-dataset) (translate to German)
 - Python 3.12
 - uv: package manager
 - Gradio: demo UI

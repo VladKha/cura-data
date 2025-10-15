@@ -18,6 +18,5 @@ dependencies = [
     "python-dotenv",
     "rich",
     "trafilatura",
-    "weaviate-client[agents]>=4.17.0",
     "datasets>=4.2.0",
 ]
